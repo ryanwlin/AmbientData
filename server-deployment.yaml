@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ambienttracker-deployment
+  labels:
+    app: ambienttracker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ambienttracker
+  template:
+    metadata:
+      labels:
+        app: ambienttracker
+    spec:
+      containers:
+        - name: ambienttracker
+          image: 401812500552.dkr.ecr.us-east-1.amazonaws.com/ryanl:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /app/credentials.json
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: api-key-secret
+                  key: api-key
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-key-secret
+                  key: app-key
+            - name: MAC_ADD
+              valueFrom:
+                secretKeyRef:
+                  name: mac-add-secret
+                  key: mac-add
+      volumes:
+        - name: credentials-volume
+          secret:
+            secretName: google-credentials-secret
