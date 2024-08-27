@@ -87,6 +87,13 @@
             <version>20230227</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>1.15.0</version> <!-- Use the latest stable version -->
+        </dependency>
+
+
     </dependencies>
 
     <build>

@@ -1,21 +1,20 @@
 package org.ryan;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
-import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.http.HttpCredentialsAdapter;
+import com.google.api.client.http.HttpRequestInitializer;
+
 
 import java.io.*;
 import java.security.GeneralSecurityException;
@@ -26,43 +25,28 @@ public class GSheet {
     private final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private final Logger logger = LogManager.getLogger(GSheet.class);
     private final HashMap<String, SensorInfo> sensors = new HashMap<>();
-    private final String spreadsheetId = "1XfM5AjJzs8rEJ9PDDi9N0DEPOqw-P1RYdM4ST8Ga4uM";
-
-    private final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
-
+    private final String spreadsheetId = System.getenv("SPREADSHEET_ID");
 
     // === Authentication and Authorization ===
-
-    private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        logger.info("Getting GSheet Credentials.");
-
-        // Use the provided environment variable for credentials
-        InputStream in = new FileInputStream(System.getenv("GOOGLE_APPLICATION_CREDENTIALS"));
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        logger.info("Loading tokens from data store.");
-        String TOKENS_DIRECTORY_PATH = "/app/tokens";
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new File(TOKENS_DIRECTORY_PATH)))
-                .setAccessType("offline")
-                .build();
-
-        // Check if the token is already stored and use it
-        Credential credential = flow.loadCredential("user");
-        if (credential != null && credential.refreshToken()) {
-            return credential;
-        }
-
-        throw new IOException("Failed to load existing credentials, or no valid token found.");
-    }
 
     public Sheets httpBuilder(int runs) {
         Sheets service = null;
         logger.info("Initializing Google Sheets API service with a new HTTP transport and credentials.");
+
+        String credentialsPath = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
+        if (credentialsPath == null) {
+            logger.error("ERROR!: Environment variable GOOGLE_APPLICATION_CREDENTIALS not set.");
+        }
+
         try {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
             String APPLICATION_NAME = "AmbientTracker DataBase";
-            service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            assert credentialsPath != null;
+            GoogleCredentials googleCredentials = GoogleCredentials.
+                    fromStream(new FileInputStream(credentialsPath));
+            HttpRequestInitializer requestInitializer = new HttpCredentialsAdapter(googleCredentials);
+
+            service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer)
                     .setApplicationName(APPLICATION_NAME)
                     .build();
             logger.info("HTTP transport and credentials successfully built");

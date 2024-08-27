@@ -9,10 +9,8 @@ This program is designed to track and archive data from an ambient weather stati
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
-- [Usage](#usage)
 - [Examples](#examples)
 - [Diagrams](#diagrams)
-- [License](#license)
 
 ## Features
 
@@ -37,13 +35,17 @@ This program is designed to track and archive data from an ambient weather stati
 - Docker installed for containerizing the application.
 - Kubernetes installed or access to a Kubernetes cluster for deploying the containerized application.
 - An AWS account with EKS (Elastic Kubernetes Service) set up for running the program in a scalable and managed environment.
+- Docker, Kubernetes, and AWS CLI Installed
 
 ## Setup
-
-
-## Usage
-
-## Example
+1. Install the repository and set up the program in Maven with Java JDK 17
+2. Rebuild Maven Dependency: mvn clean package 
+3. Authenticate Docker to ECR (Amazon Elastic Container Registry): aws ecr get-login-password --region <INSERT_REGION> | docker login --username AWS --password-stdin<IMAGE_URI>
+4. Build Docker Image: docker build -t <ECR_NAME>
+5. Tag the Docker Image to push to AWS Repo: docker tag <ECR_NAME>:<BUILD_NAME> <IMAGE_URI>/<ECR_NAME>:<BUILD_NAME>
+6. Push to AWS Repo: docker push <IMAGE_URI>/<ECR_NAME>:<BUILD_NAME>
+7. kubectl apply -f server-deployment.yaml
+## Examples
 Example output to the Google Sheet
 
 ![Screenshot 2024-08-26 at 7 10 35 PM](https://github.com/user-attachments/assets/8abd9253-1d83-4389-923c-d190f139928c)
