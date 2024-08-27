@@ -12,7 +12,7 @@ This program is designed to track and archive data from an ambient weather stati
 - [Setup](#setup)
 - [Troubleshooting](#troubleshooting)
 - [Logs and Monitoring](#logs_and_monitoring)
-- [Security Considerations](#security _onsiderations)
+- [Security Considerations](#securityconsiderations)
 - [Cleanup](#cleanup)
 - [Examples](#examples)
 - [Diagrams](#diagrams)
