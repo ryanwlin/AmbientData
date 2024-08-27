@@ -15,14 +15,14 @@ import java.util.Objects;
  * by making HTTP requests to retrieve data from Ambient Weather stations. This class
  * handles the construction and execution of said API requests, manages retries in case of
  * failures, and logs the process for monitoring and debugging purposes.
- * Key features of this class include:
- * - **Authentication:** The class uses an application key and API key for authenticating
+ * This class is responsible for:
+ * - Authentication: The class uses an application key and API key for authenticating
  *   requests to the Ambient Weather API.
- * - **HTTP Requests:** It constructs and sends HTTP GET requests to the API endpoint to
+ * - HTTP Requests: It constructs and sends HTTP GET requests to the API endpoint to
  *   fetch data from specific weather devices identified by their MAC addresses.
- * - **Retry Logic:** If a request fails (e.g., due to network issues or API errors), the
+ * - Retry Logic: If a request fails (e.g., due to network issues or API errors), the
  *   class includes logic to automatically retry the request up to three times before giving up.
- * - **Logging:** All major actions, including the success and failure of requests, are logged
+ * - Logging: All major actions, including the success and failure of requests, are logged
  *   using Log4j, providing detailed information for troubleshooting and performance monitoring.
  * Example usage:
  * - Instantiate the AmbientWeatherAPI class with the appropriate keys.
