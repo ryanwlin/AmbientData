@@ -46,5 +46,15 @@ This program is designed to track and archive data from an ambient weather stati
 ## Example
 Example output to the Google Sheet
 
+![Screenshot 2024-08-26 at 7 10 35 PM](https://github.com/user-attachments/assets/8abd9253-1d83-4389-923c-d190f139928c)
+
+Example Log Output
+
+![Screenshot 2024-08-26 at 10 21 39 PM](https://github.com/user-attachments/assets/2b479fd2-2f47-4816-9472-aaec92a1e88d)
+
 ## Diagrams
 Diagram illustrating the basic architecture of the program, including potential future enhancements such as integrating databases like AWS S3 and SQL to work in conjunction with Google Sheets.
+
+![Screenshot 2024-08-26 at 10 20 27 PM](https://github.com/user-attachments/assets/02e744d8-d89a-445a-bd5c-c3655a6417fa)
+
+
