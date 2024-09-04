@@ -93,6 +93,33 @@
             <version>1.15.0</version> <!-- Use the latest stable version -->
         </dependency>
 
+        <!-- AWS SDK for CloudWatch Logs -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-logs</artifactId>
+            <version>1.12.770</version> <!-- use the latest version -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.20.0</version> <!-- Ensure it matches the Log4j version you're using -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.kdgregory.logging</groupId>
+            <artifactId>log4j1-aws-appenders</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-kinesis</artifactId>
+            <version>1.11.500</version>
+        </dependency>
+
+
+
 
     </dependencies>
 

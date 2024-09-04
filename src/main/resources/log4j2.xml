@@ -4,8 +4,8 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="LogFile" fileName="logs/app.log">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        <File name="LogFiles" fileName="/var/log/containers/app.log">
+            <PatternLayout pattern="%d{ISO8601} [%t] %-5p %c - %m%n" />
         </File>
     </Appenders>
     <Loggers>
