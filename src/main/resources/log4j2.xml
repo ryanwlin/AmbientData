@@ -9,8 +9,8 @@
         </File>
     </Appenders>
     <Loggers>
-        <Root level="debug">
-            <AppenderRef ref="Console"/>
+        <Root level="warn">
+            <AppenderRef ref="LogFiles"/>
         </Root>
     </Loggers>
 </Configuration>
